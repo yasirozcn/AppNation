@@ -29,21 +29,21 @@ export default function ForecastCard({ data, unit }: Props) {
               alt={item.condition}
               className="w-10 h-10 mb-1"
             />
-            <div className="text-lg font-bold text-black">
+            <div className="text-lg font-bold text-black transition-all duration-400">
               {unit === "metric"
                 ? `${item.temperature}°C`
                 : `${item.temperatureF}°F`}
             </div>
-            <div className="text-xs text-black text-center mb-1">
+            <div className="text-xs text-black text-center mb-1 transition-all duration-400">
               {item.condition}
             </div>
-            <div className="text-xs text-black text-center">
+            <div className="text-xs text-black text-center transition-all duration-400">
               {unit === "metric"
                 ? `${item.minTemp}° / ${item.maxTemp}°`
                 : `${item.minTempF}° / ${item.maxTempF}°`}
             </div>
             {item.chanceOfRain > 0 && (
-              <div className="text-xs text-blue-500 mt-1">
+              <div className="text-xs text-blue-500 mt-1 transition-all duration-400">
                 Yağış: %{item.chanceOfRain}
               </div>
             )}

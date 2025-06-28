@@ -25,10 +25,41 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Animasyon container için fade-in/fade-out */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-fade-out {
+  animation: fadeOut 0.6s ease-in forwards;
+}
+
 /* Yağmur animasyonu */
 @keyframes rain {
   0% {
-    transform: translateY(-100vh);
+    transform: translateY(-20px);
     opacity: 0;
   }
   10% {
@@ -53,10 +84,10 @@ body {
     transform: translateX(-100vw) skewX(-15deg);
     opacity: 0;
   }
-  10% {
+  5% {
     opacity: 0.4;
   }
-  90% {
+  95% {
     opacity: 0.4;
   }
   100% {
@@ -75,10 +106,10 @@ body {
     transform: translateY(-100vh) rotate(0deg);
     opacity: 0;
   }
-  10% {
+  5% {
     opacity: 0.8;
   }
-  90% {
+  95% {
     opacity: 0.8;
   }
   100% {
@@ -89,4 +120,45 @@ body {
 
 .animate-snow {
   animation: snow linear infinite;
+}
+
+/* Güneş ışınları animasyonu */
+@keyframes sunRays {
+  0% {
+    transform: rotate(0deg) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+    opacity: 0.6;
+  }
+}
+
+.animate-sun-rays {
+  animation: sunRays 4s ease-in-out infinite;
+}
+
+/* Bulut yüzdürme animasyonu */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px);
+  }
+  50% {
+    transform: translateY(-5px) translateX(-5px);
+  }
+  75% {
+    transform: translateY(-15px) translateX(3px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }

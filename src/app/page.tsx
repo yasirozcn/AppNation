@@ -10,8 +10,15 @@ import WeatherAnimations from "@/components/WeatherAnimations";
 
 export default function Home() {
   const [selectedCity, setSelectedCity] = useState("");
-  const { weather, forecast, unit, loading, error, showAnimation } =
-    useAppSelector((state) => state.weather);
+  const {
+    weather,
+    forecast,
+    unit,
+    loading,
+    error,
+    showAnimation,
+    backgroundColor,
+  } = useAppSelector((state) => state.weather);
 
   // React Query ile hava durumu verilerini al
   useWeather(selectedCity);
@@ -20,8 +27,14 @@ export default function Home() {
     setSelectedCity(city);
   };
 
+  // Arka plan rengini belirle
+  const backgroundClass =
+    backgroundColor || "bg-gradient-to-br from-blue-50 via-white to-purple-50";
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8">
+    <div
+      className={`min-h-screen ${backgroundClass} py-8 transition-all duration-1000`}
+    >
       {/* Weather Animations */}
       {weather && showAnimation && (
         <WeatherAnimations

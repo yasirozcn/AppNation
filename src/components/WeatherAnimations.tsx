@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch } from "@/store/hooks";
 import { hideAnimation } from "@/store/weatherSlice";
 
@@ -10,13 +10,18 @@ interface Props {
 
 export default function WeatherAnimations({ condition, isVisible }: Props) {
   const dispatch = useAppDispatch();
+  const [isExiting, setIsExiting] = useState(false);
 
   useEffect(() => {
     if (isVisible) {
-      // 3 saniye sonra animasyonu gizle
+      setIsExiting(false);
+      // 4 saniye sonra animasyonu gizle
       const timer = setTimeout(() => {
-        dispatch(hideAnimation());
-      }, 3000);
+        setIsExiting(true);
+        setTimeout(() => {
+          dispatch(hideAnimation());
+        }, 600); // fadeOut animasyonu süresi
+      }, 4000);
       return () => clearTimeout(timer);
     }
   }, [isVisible, dispatch]);
@@ -32,16 +37,21 @@ export default function WeatherAnimations({ condition, isVisible }: Props) {
     conditionLower.includes("drizzle")
   ) {
     return (
-      <div className="fixed inset-0 pointer-events-none z-10">
-        <div className="absolute inset-0 bg-blue-200 opacity-20"></div>
+      <div
+        className={`fixed inset-0 pointer-events-none z-10 transition-all duration-600 ${
+          isExiting ? "animate-fade-out" : "animate-fade-in"
+        }`}
+      >
+        <div className="absolute inset-0 bg-blue-200 opacity-20 transition-opacity duration-500"></div>
         {[...Array(50)].map((_, i) => (
           <div
             key={i}
             className="absolute w-1 h-8 bg-blue-400 opacity-60 animate-rain"
             style={{
               left: `${Math.random() * 100}%`,
+              top: `-${Math.random() * 100}px`,
               animationDelay: `${Math.random() * 2}s`,
-              animationDuration: `${0.5 + Math.random() * 0.5}s`,
+              animationDuration: `${0.8 + Math.random() * 0.8}s`,
             }}
           />
         ))}
@@ -56,8 +66,12 @@ export default function WeatherAnimations({ condition, isVisible }: Props) {
     conditionLower.includes("breeze")
   ) {
     return (
-      <div className="fixed inset-0 pointer-events-none z-10">
-        <div className="absolute inset-0 bg-gray-200 opacity-10"></div>
+      <div
+        className={`fixed inset-0 pointer-events-none z-10 transition-all duration-600 ${
+          isExiting ? "animate-fade-out" : "animate-fade-in"
+        }`}
+      >
+        <div className="absolute inset-0 bg-gray-200 opacity-10 transition-opacity duration-500"></div>
         {[...Array(20)].map((_, i) => (
           <div
             key={i}
@@ -66,7 +80,7 @@ export default function WeatherAnimations({ condition, isVisible }: Props) {
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
               animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`,
+              animationDuration: `${3 + Math.random() * 2}s`,
             }}
           />
         ))}
@@ -82,16 +96,20 @@ export default function WeatherAnimations({ condition, isVisible }: Props) {
     conditionLower.includes("açık")
   ) {
     return (
-      <div className="fixed inset-0 pointer-events-none z-10">
-        <div className="absolute inset-0 bg-yellow-200 opacity-10"></div>
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-yellow-400 rounded-full animate-pulse opacity-60"></div>
+      <div
+        className={`fixed inset-0 pointer-events-none z-10 transition-all duration-600 ${
+          isExiting ? "animate-fade-out" : "animate-fade-in"
+        }`}
+      >
+        <div className="absolute inset-0 bg-yellow-200 opacity-10 transition-opacity duration-500"></div>
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-yellow-400 rounded-full animate-sun-rays opacity-60"></div>
         <div
           className="absolute top-1/3 right-1/4 w-24 h-24 bg-yellow-300 rounded-full animate-bounce opacity-40"
-          style={{ animationDelay: "0.5s" }}
+          style={{ animationDelay: "0.5s", animationDuration: "2s" }}
         ></div>
         <div
           className="absolute bottom-1/4 left-1/3 w-16 h-16 bg-yellow-500 rounded-full animate-ping opacity-30"
-          style={{ animationDelay: "1s" }}
+          style={{ animationDelay: "1s", animationDuration: "3s" }}
         ></div>
       </div>
     );
@@ -100,8 +118,12 @@ export default function WeatherAnimations({ condition, isVisible }: Props) {
   // Kar animasyonu
   if (conditionLower.includes("snow") || conditionLower.includes("kar")) {
     return (
-      <div className="fixed inset-0 pointer-events-none z-10">
-        <div className="absolute inset-0 bg-blue-100 opacity-20"></div>
+      <div
+        className={`fixed inset-0 pointer-events-none z-10 transition-all duration-600 ${
+          isExiting ? "animate-fade-out" : "animate-fade-in"
+        }`}
+      >
+        <div className="absolute inset-0 bg-blue-100 opacity-20 transition-opacity duration-500"></div>
         {[...Array(30)].map((_, i) => (
           <div
             key={i}
@@ -109,7 +131,7 @@ export default function WeatherAnimations({ condition, isVisible }: Props) {
             style={{
               left: `${Math.random() * 100}%`,
               animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${3 + Math.random() * 2}s`,
+              animationDuration: `${4 + Math.random() * 2}s`,
             }}
           />
         ))}
@@ -124,16 +146,20 @@ export default function WeatherAnimations({ condition, isVisible }: Props) {
     conditionLower.includes("overcast")
   ) {
     return (
-      <div className="fixed inset-0 pointer-events-none z-10">
-        <div className="absolute inset-0 bg-gray-200 opacity-10"></div>
-        <div className="absolute top-1/4 left-1/4 w-32 h-16 bg-gray-300 rounded-full opacity-40 animate-pulse"></div>
+      <div
+        className={`fixed inset-0 pointer-events-none z-10 transition-all duration-600 ${
+          isExiting ? "animate-fade-out" : "animate-fade-in"
+        }`}
+      >
+        <div className="absolute inset-0 bg-gray-200 opacity-10 transition-opacity duration-500"></div>
+        <div className="absolute top-1/4 left-1/4 w-32 h-16 bg-gray-300 rounded-full opacity-40 animate-float"></div>
         <div
-          className="absolute top-1/3 right-1/4 w-24 h-12 bg-gray-400 rounded-full opacity-30 animate-bounce"
-          style={{ animationDelay: "1s" }}
+          className="absolute top-1/3 right-1/4 w-24 h-12 bg-gray-400 rounded-full opacity-30 animate-float"
+          style={{ animationDelay: "1s", animationDuration: "8s" }}
         ></div>
         <div
-          className="absolute bottom-1/4 left-1/3 w-28 h-14 bg-gray-300 rounded-full opacity-35 animate-pulse"
-          style={{ animationDelay: "0.5s" }}
+          className="absolute bottom-1/4 left-1/3 w-28 h-14 bg-gray-300 rounded-full opacity-35 animate-float"
+          style={{ animationDelay: "0.5s", animationDuration: "10s" }}
         ></div>
       </div>
     );

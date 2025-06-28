@@ -9,6 +9,7 @@ interface WeatherState {
   loading: boolean;
   error: string | null;
   showAnimation: boolean;
+  backgroundColor: string | null;
 }
 
 const initialState: WeatherState = {
@@ -19,6 +20,7 @@ const initialState: WeatherState = {
   loading: false,
   error: null,
   showAnimation: false,
+  backgroundColor: null,
 };
 
 const weatherSlice = createSlice({
@@ -29,6 +31,25 @@ const weatherSlice = createSlice({
       state.weather = action.payload;
       state.error = null;
       state.showAnimation = true;
+
+      // Hava durumuna göre arka plan rengini belirle
+      const condition = action.payload.condition.toLowerCase();
+      if (condition.includes("rain") || condition.includes("drizzle")) {
+        state.backgroundColor = "bg-blue-200";
+      } else if (condition.includes("snow")) {
+        state.backgroundColor = "bg-blue-100";
+      } else if (condition.includes("clear") || condition.includes("sun")) {
+        state.backgroundColor = "bg-yellow-200";
+      } else if (
+        condition.includes("cloud") ||
+        condition.includes("overcast")
+      ) {
+        state.backgroundColor = "bg-gray-200";
+      } else if (condition.includes("wind") || condition.includes("breeze")) {
+        state.backgroundColor = "bg-gray-200";
+      } else {
+        state.backgroundColor = "bg-gray-50";
+      }
     },
     setForecast: (state, action: PayloadAction<ForecastData>) => {
       state.forecast = action.payload;
@@ -58,6 +79,9 @@ const weatherSlice = createSlice({
     hideAnimation: (state) => {
       state.showAnimation = false;
     },
+    clearBackground: (state) => {
+      state.backgroundColor = null;
+    },
   },
 });
 
@@ -70,6 +94,7 @@ export const {
   setLoading,
   setError,
   hideAnimation,
+  clearBackground,
 } = weatherSlice.actions;
 
 export default weatherSlice.reducer;

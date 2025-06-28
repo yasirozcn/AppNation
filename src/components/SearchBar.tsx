@@ -36,13 +36,13 @@ export default function SearchBar({ onCitySelect }: SearchBarProps) {
 
   return (
     <div className="w-full max-w-md mx-auto mb-6">
-      <form onSubmit={handleSubmit} className="flex gap-2">
+      <form onSubmit={handleSubmit} className="flex">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Şehir adı girin..."
-          className="flex-1 px-4 py-2 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 text-black placeholder-black"
+          className="flex-1 px-4 py-2 rounded-l-lg border border-gray-300 focus:outline-none focus:none text-black placeholder-black"
         />
         <button
           type="submit"
@@ -57,7 +57,7 @@ export default function SearchBar({ onCitySelect }: SearchBarProps) {
             <button
               key={city}
               onClick={() => handleHistoryClick(city)}
-              className="px-3 py-1 bg-gray-200 rounded hover:bg-blue-100 text-sm transition-colors text-black"
+              className="px-3 py-1 bg-gray-300 rounded hover:bg-blue-100 text-sm transition-colors text-black cursor-pointer"
             >
               {city}
             </button>
