@@ -24,3 +24,69 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Yağmur animasyonu */
+@keyframes rain {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+.animate-rain {
+  animation: rain linear infinite;
+}
+
+/* Rüzgar animasyonu */
+@keyframes wind {
+  0% {
+    transform: translateX(-100vw) skewX(-15deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.4;
+  }
+  90% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateX(100vw) skewX(-15deg);
+    opacity: 0;
+  }
+}
+
+.animate-wind {
+  animation: wind linear infinite;
+}
+
+/* Kar animasyonu */
+@keyframes snow {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.animate-snow {
+  animation: snow linear infinite;
+}
