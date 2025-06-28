@@ -39,7 +39,7 @@ const weatherSlice = createSlice({
       } else if (condition.includes("snow")) {
         state.backgroundColor = "bg-blue-100";
       } else if (condition.includes("clear") || condition.includes("sun")) {
-        state.backgroundColor = "bg-yellow-200";
+        state.backgroundColor = "bg-yellow-50";
       } else if (
         condition.includes("cloud") ||
         condition.includes("overcast")

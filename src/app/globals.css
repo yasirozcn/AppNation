@@ -56,10 +56,10 @@ body {
   animation: fadeOut 0.6s ease-in forwards;
 }
 
-/* Yağmur animasyonu */
+/* Yağmur animasyonu - SVG damlalar için */
 @keyframes rain {
   0% {
-    transform: translateY(-20px);
+    transform: translateY(-20px) rotate(0deg);
     opacity: 0;
   }
   10% {
@@ -69,7 +69,7 @@ body {
     opacity: 1;
   }
   100% {
-    transform: translateY(100vh);
+    transform: translateY(100vh) rotate(360deg);
     opacity: 0;
   }
 }
@@ -78,10 +78,10 @@ body {
   animation: rain linear infinite;
 }
 
-/* Rüzgar animasyonu */
+/* Rüzgar animasyonu - SVG rüzgar ikonları için */
 @keyframes wind {
   0% {
-    transform: translateX(-100vw) skewX(-15deg);
+    transform: translateX(-100vw) scale(0.8);
     opacity: 0;
   }
   5% {
@@ -91,7 +91,7 @@ body {
     opacity: 0.4;
   }
   100% {
-    transform: translateX(100vw) skewX(-15deg);
+    transform: translateX(100vw) scale(1.2);
     opacity: 0;
   }
 }
@@ -100,10 +100,10 @@ body {
   animation: wind linear infinite;
 }
 
-/* Kar animasyonu */
+/* Kar animasyonu - SVG kar taneleri için */
 @keyframes snow {
   0% {
-    transform: translateY(-100vh) rotate(0deg);
+    transform: translateY(-100vh) rotate(0deg) scale(0.8);
     opacity: 0;
   }
   5% {
@@ -113,7 +113,7 @@ body {
     opacity: 0.8;
   }
   100% {
-    transform: translateY(100vh) rotate(360deg);
+    transform: translateY(100vh) rotate(720deg) scale(1.2);
     opacity: 0;
   }
 }
@@ -122,15 +122,23 @@ body {
   animation: snow linear infinite;
 }
 
-/* Güneş ışınları animasyonu */
+/* Güneş ışınları animasyonu - SVG güneş için */
 @keyframes sunRays {
   0% {
     transform: rotate(0deg) scale(1);
     opacity: 0.6;
   }
-  50% {
-    transform: rotate(180deg) scale(1.1);
+  25% {
+    transform: rotate(90deg) scale(1.1);
     opacity: 0.8;
+  }
+  50% {
+    transform: rotate(180deg) scale(1.05);
+    opacity: 0.7;
+  }
+  75% {
+    transform: rotate(270deg) scale(1.15);
+    opacity: 0.9;
   }
   100% {
     transform: rotate(360deg) scale(1);
@@ -139,26 +147,26 @@ body {
 }
 
 .animate-sun-rays {
-  animation: sunRays 4s ease-in-out infinite;
+  animation: sunRays 6s ease-in-out infinite;
 }
 
-/* Bulut yüzdürme animasyonu */
+/* Bulut yüzdürme animasyonu - SVG bulutlar için */
 @keyframes float {
   0%,
   100% {
-    transform: translateY(0px) translateX(0px);
+    transform: translateY(0px) translateX(0px) scale(1);
   }
   25% {
-    transform: translateY(-10px) translateX(5px);
+    transform: translateY(-15px) translateX(8px) scale(1.05);
   }
   50% {
-    transform: translateY(-5px) translateX(-5px);
+    transform: translateY(-8px) translateX(-5px) scale(0.95);
   }
   75% {
-    transform: translateY(-15px) translateX(3px);
+    transform: translateY(-20px) translateX(5px) scale(1.1);
   }
 }
 
 .animate-float {
-  animation: float 6s ease-in-out infinite;
+  animation: float 8s ease-in-out infinite;
 }
