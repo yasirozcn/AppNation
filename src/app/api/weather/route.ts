@@ -4,10 +4,10 @@ import { WeatherAPIResponse } from "@/types/weather";
 const API_KEY = process.env.WEATHER_API_KEY;
 const BASE_URL = "http://api.weatherapi.com/v1";
 
-// Rate limiting için basit cache
+// Simple cache for rate limiting
 const requestCache = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT = 10; // 1 dakikada maksimum 10 istek
-const RATE_LIMIT_WINDOW = 60 * 1000; // 1 dakika
+const RATE_LIMIT = 10; // Maximum 10 requests per minute
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
 
 function checkRateLimit(ip: string): boolean {
   const now = Date.now();
@@ -27,13 +27,13 @@ function checkRateLimit(ip: string): boolean {
 }
 
 export async function GET(request: NextRequest) {
-  // Rate limiting kontrolü
+  // Rate limiting check
   const forwarded = request.headers.get("x-forwarded-for");
   const ip = forwarded ? forwarded.split(",")[0] : "unknown";
 
   if (!checkRateLimit(ip)) {
     return NextResponse.json(
-      { error: "Rate limit aşıldı. Lütfen 1 dakika bekleyin." },
+      { error: "Rate limit exceeded. Please wait 1 minute." },
       { status: 429 }
     );
   }
@@ -43,22 +43,19 @@ export async function GET(request: NextRequest) {
 
   if (!city) {
     return NextResponse.json(
-      { error: "Şehir parametresi gerekli" },
+      { error: "City parameter is required" },
       { status: 400 }
     );
   }
 
   if (!API_KEY) {
-    return NextResponse.json(
-      { error: "API anahtarı bulunamadı" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "API key not found" }, { status: 500 });
   }
 
   // Input validation
-  const sanitizedCity = city.trim().slice(0, 100); // Maksimum 100 karakter
+  const sanitizedCity = city.trim().slice(0, 100); // Maximum 100 characters
   if (!sanitizedCity) {
-    return NextResponse.json({ error: "Geçersiz şehir adı" }, { status: 400 });
+    return NextResponse.json({ error: "Invalid city name" }, { status: 400 });
   }
 
   try {
@@ -72,7 +69,7 @@ export async function GET(request: NextRequest) {
             "User-Agent": "AppNation-Weather-App/1.0",
           },
           next: {
-            revalidate: 300, // 5 dakika cache
+            revalidate: 300, // 5 minutes cache
           },
         }
       ),
@@ -85,7 +82,7 @@ export async function GET(request: NextRequest) {
             "User-Agent": "AppNation-Weather-App/1.0",
           },
           next: {
-            revalidate: 1800, // 30 dakika cache (forecast daha az sık değişir)
+            revalidate: 1800, // 30 minutes cache (forecast changes less frequently)
           },
         }
       ),
@@ -94,7 +91,10 @@ export async function GET(request: NextRequest) {
     if (!currentResponse.ok || !forecastResponse.ok) {
       const errorData = await currentResponse.json().catch(() => ({}));
       return NextResponse.json(
-        { error: errorData.error?.message || "Hava durumu verisi alınamadı" },
+        {
+          error:
+            errorData.error?.message || "Weather data could not be retrieved",
+        },
         { status: currentResponse.status }
       );
     }
@@ -116,7 +116,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error("Weather API Error:", error);
     return NextResponse.json(
-      { error: "Sunucu hatası oluştu" },
+      { error: "Server error occurred" },
       { status: 500 }
     );
   }

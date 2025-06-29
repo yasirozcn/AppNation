@@ -41,14 +41,14 @@ export default function SearchBar({ onCitySelect }: SearchBarProps) {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Şehir adı girin..."
+          placeholder="Enter city name..."
           className="flex-1 px-4 py-2 rounded-l-lg border border-gray-300 focus:outline-none focus:none text-black placeholder-black"
         />
         <button
           type="submit"
           className="px-6 py-2 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700 transition-colors"
         >
-          Ara
+          Search
         </button>
       </form>
       {history.length > 0 && (

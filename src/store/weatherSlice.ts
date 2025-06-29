@@ -32,7 +32,7 @@ const weatherSlice = createSlice({
       state.error = null;
       state.showAnimation = true;
 
-      // Hava durumuna göre arka plan rengini belirle
+      // Determine background color based on weather condition
       const condition = action.payload.condition.toLowerCase();
       if (condition.includes("rain") || condition.includes("drizzle")) {
         state.backgroundColor = "bg-blue-200";

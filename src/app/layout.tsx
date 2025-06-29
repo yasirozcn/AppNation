@@ -4,9 +4,9 @@ import { QueryProvider } from "../components/QueryProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "AppNation - Hava Durumu Dashboard",
-  description: "Modern ve kullanıcı dostu hava durumu uygulaması",
-  keywords: ["hava durumu", "weather", "dashboard", "Next.js", "React"],
+  title: "AppNation - Weather Dashboard",
+  description: "Modern and user-friendly weather application",
+  keywords: ["weather", "dashboard", "Next.js", "React"],
 };
 
 export default function RootLayout({
@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="tr">
+    <html lang="en">
       <body className="font-sans antialiased bg-gray-50">
         <QueryProvider>
           <Providers>{children}</Providers>

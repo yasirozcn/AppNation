@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { WeatherData } from "@/types/weather";
 
 interface Props {
@@ -12,10 +13,14 @@ export default function WeatherCard({ data, unit }: Props) {
         <span className="text-2xl font-bold text-black">
           {data.city}, {data.country}
         </span>
-        <img
+        <Image
           src={`https:${data.icon}`}
           alt={data.condition}
+          width={48}
+          height={48}
           className="w-12 h-12"
+          priority
+          unoptimized // Weather API icons are already optimized
         />
       </div>
       <div className="text-5xl font-extrabold mb-2 text-black">
@@ -23,21 +28,22 @@ export default function WeatherCard({ data, unit }: Props) {
       </div>
       <div className="text-lg text-black mb-2">{data.condition}</div>
       <div className="text-sm text-black mb-4">
-        Hissedilen:{" "}
+        Feels like:{" "}
         {unit === "metric" ? `${data.feelsLike}°C` : `${data.feelsLikeF}°F`}
       </div>
       <div className="grid grid-cols-2 gap-6 text-black text-sm">
         <div>
-          Nem: <span className="font-semibold">{data.humidity}%</span>
+          Humidity: <span className="font-semibold">{data.humidity}%</span>
         </div>
         <div>
-          Rüzgar: <span className="font-semibold">{data.windSpeed} km/h</span>
+          Wind: <span className="font-semibold">{data.windSpeed} km/h</span>
         </div>
         <div>
           UV: <span className="font-semibold">{data.uv}</span>
         </div>
         <div>
-          Görüş: <span className="font-semibold">{data.visibility} km</span>
+          Visibility:{" "}
+          <span className="font-semibold">{data.visibility} km</span>
         </div>
       </div>
     </div>

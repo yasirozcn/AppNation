@@ -9,21 +9,21 @@ import {
 import { WeatherData, ForecastData, WeatherAPIResponse } from "@/types/weather";
 import React from "react";
 
-// API fonksiyonu
+// API function
 const fetchWeatherData = async (city: string) => {
-  if (!city.trim()) throw new Error("Şehir adı gerekli");
+  if (!city.trim()) throw new Error("City name is required");
 
   const response = await fetch(`/api/weather?city=${encodeURIComponent(city)}`);
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.error || "Hava durumu verisi alınamadı");
+    throw new Error(data.error || "Weather data could not be retrieved");
   }
 
   return data;
 };
 
-// Veri dönüştürme fonksiyonları
+// Data transformation functions
 const transformWeatherData = (data: {
   current: WeatherAPIResponse;
 }): WeatherData => {
@@ -55,13 +55,13 @@ const transformForecastData = (data: {
       date: day.date,
       temperature: Math.round(day.day.avgtemp_c),
       temperatureF: Math.round(day.day.avgtemp_f),
-      condition: day.day.condition.text,
-      icon: day.day.condition.icon,
-      maxTemp: Math.round(day.day.maxtemp_c),
-      maxTempF: Math.round(day.day.maxtemp_f),
       minTemp: Math.round(day.day.mintemp_c),
       minTempF: Math.round(day.day.mintemp_f),
-      chanceOfRain: day.day.daily_chance_of_rain,
+      maxTemp: Math.round(day.day.maxtemp_c),
+      maxTempF: Math.round(day.day.maxtemp_f),
+      condition: day.day.condition.text,
+      icon: day.day.condition.icon,
+      chanceOfRain: Math.round(day.day.daily_chance_of_rain),
     })),
   };
 };
@@ -81,13 +81,13 @@ export const useWeather = (city: string) => {
     queryKey: ["weather", city],
     queryFn: () => fetchWeatherData(city),
     enabled: !!city.trim(),
-    staleTime: 5 * 60 * 1000, // 5 dakika
-    gcTime: 10 * 60 * 1000, // 10 dakika
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
     retry: 2,
     refetchOnWindowFocus: false,
   });
 
-  // React Query'den gelen verileri RTK store'a senkronize et
+  // Synchronize data from React Query to RTK store
   React.useEffect(() => {
     if (data) {
       const weatherData = transformWeatherData(data);
@@ -99,18 +99,18 @@ export const useWeather = (city: string) => {
     }
   }, [data, dispatch]);
 
-  // Loading state'ini senkronize et
+  // Synchronize loading state
   React.useEffect(() => {
     dispatch(setLoading(isLoading));
   }, [isLoading, dispatch]);
 
-  // Error state'ini senkronize et
+  // Synchronize error state
   React.useEffect(() => {
     if (queryError) {
       const errorMessage =
         queryError instanceof Error
           ? queryError.message
-          : "Bilinmeyen hata oluştu";
+          : "Unknown error occurred";
       dispatch(setError(errorMessage));
     }
   }, [queryError, dispatch]);

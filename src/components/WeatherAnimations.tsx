@@ -15,12 +15,12 @@ export default function WeatherAnimations({ condition, isVisible }: Props) {
   useEffect(() => {
     if (isVisible) {
       setIsExiting(false);
-      // 4 saniye sonra animasyonu gizle
+      // Hide animation after 4 seconds
       const timer = setTimeout(() => {
         setIsExiting(true);
         setTimeout(() => {
           dispatch(hideAnimation());
-        }, 600); // fadeOut animasyonu süresi
+        }, 600); // fadeOut animation duration
       }, 4000);
       return () => clearTimeout(timer);
     }
@@ -30,12 +30,8 @@ export default function WeatherAnimations({ condition, isVisible }: Props) {
 
   const conditionLower = condition.toLowerCase();
 
-  // Yağmur animasyonu
-  if (
-    conditionLower.includes("rain") ||
-    conditionLower.includes("yağmur") ||
-    conditionLower.includes("drizzle")
-  ) {
+  // Rain animation
+  if (conditionLower.includes("rain") || conditionLower.includes("drizzle")) {
     return (
       <div
         className={`fixed inset-0 pointer-events-none z-10 transition-all duration-600 ${
@@ -61,12 +57,8 @@ export default function WeatherAnimations({ condition, isVisible }: Props) {
     );
   }
 
-  // Rüzgar animasyonu
-  if (
-    conditionLower.includes("wind") ||
-    conditionLower.includes("rüzgar") ||
-    conditionLower.includes("breeze")
-  ) {
+  // Wind animation
+  if (conditionLower.includes("wind") || conditionLower.includes("breeze")) {
     return (
       <div
         className={`fixed inset-0 pointer-events-none z-10 transition-all duration-600 ${
@@ -92,13 +84,8 @@ export default function WeatherAnimations({ condition, isVisible }: Props) {
     );
   }
 
-  // Güneş animasyonu
-  if (
-    conditionLower.includes("sun") ||
-    conditionLower.includes("güneş") ||
-    conditionLower.includes("clear") ||
-    conditionLower.includes("açık")
-  ) {
+  // Sun animation
+  if (conditionLower.includes("sun") || conditionLower.includes("clear")) {
     return (
       <div
         className={`fixed inset-0 pointer-events-none z-10 transition-all duration-600 ${
@@ -107,12 +94,12 @@ export default function WeatherAnimations({ condition, isVisible }: Props) {
       >
         <div className="absolute inset-0 bg-yellow-200 opacity-10 transition-opacity duration-500"></div>
 
-        {/* Ana güneş - mobilde daha küçük */}
+        {/* Main sun - smaller on mobile */}
         <svg className="absolute top-1/4 left-1/4 w-16 h-16 md:w-24 md:h-24 text-yellow-400 animate-sun-rays opacity-60">
           <use href="/weather-icons.svg#sun-icon" />
         </svg>
 
-        {/* İkinci güneş - sadece tablet ve üstünde göster */}
+        {/* Second sun - only shown on tablet and above */}
         <svg
           className="hidden md:block absolute top-1/3 right-1/4 w-20 h-20 text-yellow-300 animate-bounce opacity-40"
           style={{ animationDelay: "0.5s", animationDuration: "2s" }}
@@ -120,7 +107,7 @@ export default function WeatherAnimations({ condition, isVisible }: Props) {
           <use href="/weather-icons.svg#sun-icon" />
         </svg>
 
-        {/* Üçüncü güneş - sadece desktop'ta göster */}
+        {/* Third sun - only shown on desktop */}
         <svg
           className="hidden lg:block absolute bottom-1/4 left-1/3 w-12 h-12 text-yellow-500 animate-ping opacity-30"
           style={{ animationDelay: "1s", animationDuration: "3s" }}
@@ -128,7 +115,7 @@ export default function WeatherAnimations({ condition, isVisible }: Props) {
           <use href="/weather-icons.svg#sun-icon" />
         </svg>
 
-        {/* Mobil için ek güneş ışınları */}
+        {/* Additional sun rays for mobile */}
         <svg className="md:hidden absolute top-1/3 right-1/4 w-10 h-10 text-yellow-300 animate-pulse opacity-30">
           <use href="/weather-icons.svg#sun-icon" />
         </svg>
@@ -136,8 +123,8 @@ export default function WeatherAnimations({ condition, isVisible }: Props) {
     );
   }
 
-  // Kar animasyonu
-  if (conditionLower.includes("snow") || conditionLower.includes("kar")) {
+  // Snow animation
+  if (conditionLower.includes("snow")) {
     return (
       <div
         className={`fixed inset-0 pointer-events-none z-10 transition-all duration-600 ${
@@ -162,12 +149,8 @@ export default function WeatherAnimations({ condition, isVisible }: Props) {
     );
   }
 
-  // Bulut animasyonu
-  if (
-    conditionLower.includes("cloud") ||
-    conditionLower.includes("bulut") ||
-    conditionLower.includes("overcast")
-  ) {
+  // Cloud animation
+  if (conditionLower.includes("cloud") || conditionLower.includes("overcast")) {
     return (
       <div
         className={`fixed inset-0 pointer-events-none z-10 transition-all duration-600 ${
@@ -176,12 +159,12 @@ export default function WeatherAnimations({ condition, isVisible }: Props) {
       >
         <div className="absolute inset-0 bg-gray-200 opacity-10 transition-opacity duration-500"></div>
 
-        {/* Ana bulut */}
+        {/* Main cloud */}
         <svg className="absolute top-1/4 left-1/4 w-24 h-16 text-gray-300 animate-float opacity-40">
           <use href="/weather-icons.svg#cloud-icon" />
         </svg>
 
-        {/* İkinci bulut - sadece tablet ve üstünde */}
+        {/* Second cloud - only on tablet and above */}
         <svg
           className="hidden md:block absolute top-1/3 right-1/4 w-20 h-14 text-gray-400 animate-float opacity-30"
           style={{ animationDelay: "1s", animationDuration: "8s" }}
@@ -189,7 +172,7 @@ export default function WeatherAnimations({ condition, isVisible }: Props) {
           <use href="/weather-icons.svg#cloud-icon" />
         </svg>
 
-        {/* Üçüncü bulut - sadece desktop'ta */}
+        {/* Third cloud - only on desktop */}
         <svg
           className="hidden lg:block absolute bottom-1/4 left-1/3 w-28 h-18 text-gray-300 animate-float opacity-35"
           style={{ animationDelay: "0.5s", animationDuration: "10s" }}
@@ -197,7 +180,7 @@ export default function WeatherAnimations({ condition, isVisible }: Props) {
           <use href="/weather-icons.svg#cloud-icon" />
         </svg>
 
-        {/* Mobil için ek bulut */}
+        {/* Additional cloud for mobile */}
         <svg
           className="md:hidden absolute bottom-1/4 right-1/4 w-16 h-12 text-gray-400 animate-float opacity-25"
           style={{ animationDelay: "0.5s", animationDuration: "6s" }}
